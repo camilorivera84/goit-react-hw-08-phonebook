@@ -1,5 +1,3 @@
-// contactsAPI.js
-
 export const getContacts = async () => {
   const response = await fetch(
     'https://64fb594fcb9c00518f7aefed.mockapi.io/contacts/contacts'

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../redux/ContactsSlice';
+import { addContact } from './ContactsSlice';
+import { addContact as addContactAPI } from '../components/ContactsAPI'; // Importa la función addContact de contactsAPI
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const ContactForm = () => {
     setNumber(formattedNumber);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     const phoneNumberRegex = /^\d{3}-\d{3}-\d{4}$/;
@@ -40,8 +41,15 @@ const ContactForm = () => {
     }
 
     const newContact = { name, phone: number };
-
-    dispatch(addContact(newContact));
+    console.log('Nuevo contacto:', newContact);
+    try {
+      // Llama a la función addContact de contactsAPI
+      const data = await addContactAPI(newContact);
+      console.log('Respuesta de la API:', data);
+      dispatch(addContact(data)); // Dispatch la acción para agregar el contacto en Redux
+    } catch (error) {
+      console.error('Error al agregar el contacto:', error);
+    }
 
     setName('');
     setNumber('');

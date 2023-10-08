@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts, deleteContact } from '../redux/ContactsSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchContacts, deleteContact } from './ContactsSlice';
 
 const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(state => {
     const filter = state.contacts.filter.toLowerCase();
+    console.log('Lista de contactos actualizada:', state.contacts.items);
     return state.contacts.items.filter(
       contact =>
         contact.name.toLowerCase().includes(filter) ||
